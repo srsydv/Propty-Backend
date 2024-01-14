@@ -69,6 +69,7 @@ exports.validateSignature = asyncHandler(async (req, res, next) => {
             id: user._id,
             token,
             verificationStatus: user.termOfService,
+            whitelisted: user.whitelisted,
           });
         } else {
           res.status(400).json({
