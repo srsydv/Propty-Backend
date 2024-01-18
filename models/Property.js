@@ -81,6 +81,10 @@ const PropertySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  availableTokens: {
+    type: Number,
+    required: true,
+  },  
   tokenPrice: {
     type: Number,
     required: true,

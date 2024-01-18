@@ -1,6 +1,19 @@
 const mongoose = require("mongoose");
 
-const BuySellSchema = new mongoose.Schema(
+const Buyers = new mongoose.Schema(
+    {
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+      
+        amount: Number,
+        // withdrawnInstallment: Number,
+    },
+    { timestamps: true }
+
+);
+const P2PSchema = new mongoose.Schema(
     {
     property: {
         type: mongoose.Schema.ObjectId,
@@ -12,20 +25,20 @@ const BuySellSchema = new mongoose.Schema(
         ref: "User",
         required: true,
     },
-    buyer: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
+    buyers: [Buyers],
+    status: {
+        type: String, enum: ["active", "inactive"],
+        default: "active" 
     },
-    requestFor: {
-        type: String,
-        enum: ["aconomy", "marketplace"],
+    availableTokens: {
+        type: Number,
         required: true,
     },
-    status: {
-        type: String,
-        enum: ["none", "accepted", "cancel"],
-        default: "none",
+    totalTokens: {
+        type: Number,
+        required: true,
     },
+
     tokenPrice: {
         type: Number,
         required: true,
@@ -42,4 +55,4 @@ const BuySellSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model("BuySell", BuySellSchema);
+module.exports = mongoose.model("P2P", P2PSchema);

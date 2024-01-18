@@ -24,7 +24,27 @@ const rentSchema = new mongoose.Schema(
     grossRentPerMonth: Number,
   },
   { timestamps: true }
-)
+);
+
+const p2pHistorySchema = new mongoose.Schema(
+  { 
+    property: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Property",
+    },
+    buyerOrSeller: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+    tokens: Number,
+    status: {
+      type: String,
+      enum: ["Sold", "Bought"],
+    },
+  },
+  { timestamps: true }
+);
+
 const propertyTokenSchema = new mongoose.Schema(
   {
     property: {
@@ -84,6 +104,7 @@ const UserSchema = new mongoose.Schema(
     reviewStatus: String,
     withdrawnHistory: [withdrawEarningSchema],
     propertyToken : [propertyTokenSchema],
+    p2pHistory: [p2pHistorySchema]
     
   },
   { timestamps: true }
