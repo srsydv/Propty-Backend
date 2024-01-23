@@ -57,7 +57,7 @@ router
     );
 
 router
-  .route("/getUsersListedProperties")
+  .route("/getUsersListedProperties/:userId")
   .get(
       protect,
       authorize("user"),

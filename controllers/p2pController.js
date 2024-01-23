@@ -271,7 +271,7 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
 
 exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
   try {
-      const { userId } = req.body;
+      const { userId } = req.params;
       const data = await P2PModal.find({
        seller: userId,
     }).populate([
