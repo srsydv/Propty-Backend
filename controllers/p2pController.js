@@ -225,7 +225,17 @@ exports.buy = asyncHandler(async (req, res, next) => {
 
 exports.getAllListedProperties = asyncHandler(async (req, res, next) => {
   try {
-    res.status(200).json(res.advancedResults);
+    const projection = { property: 1, seller: 1, availableTokens: 1, tokenPrice: 1 };
+    const result = await P2PModal.find({}, projection).populate([
+      {
+        path: "property",
+        select: "propertyName mediaLinks",
+      },
+    ]);
+    res.status(201).json({
+      success: true,
+      data: result,
+    })
   } catch (err) {
     res.status(400).json({ success: false });
   }

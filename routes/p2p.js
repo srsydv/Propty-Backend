@@ -34,7 +34,8 @@ router
 router
   .route("/buyFromMarketplace/:p2pId")
   .post(
-    
+    protect,
+    authorize("user"),
     p2pController.buy
   );
 
@@ -42,7 +43,8 @@ router
 router
   .route("/getAllListedProperties")
   .get(
-      advancedResults(P2PModel),
+    protect,
+    authorize("user"),
       p2pController.getAllListedProperties
     );
 
@@ -55,11 +57,11 @@ router
     );
 
 router
-  .route("/getAllOrders")
+  .route("/getUsersListedProperties")
   .get(
       protect,
-      authorize("user", "admin"),
-      p2pController.getAllOrders
+      authorize("user"),
+      p2pController.getUsersListedProperties
     );
 
 module.exports = router;
