@@ -231,6 +231,11 @@ exports.getAllListedProperties = asyncHandler(async (req, res, next) => {
         path: "property",
         select: "propertyName mediaLinks",
       },
+    ]).populate([
+      {
+        path: "seller",
+        select: "username",
+      },
     ]);
     res.status(201).json({
       success: true,
