@@ -272,9 +272,10 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
 exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
   try {
       const { userId } = req.params;
+      const projection = { property: 1, seller: 1, availableTokens: 1, tokenPrice: 1 ,totalTokens: 1, status: 1};
       const data = await P2PModal.find({
        seller: userId,
-    }).populate([
+    }, projection).populate([
       {
         path: "property",
         select: "propertyName mediaLinks",
@@ -299,6 +300,30 @@ exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
     }
   } catch (err) {
     res.status(400).json({ success: false+ err });
+  }
+});
+
+exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
+
+  try {
+    const {p2pId} = req.params;
+    console.log(p2pId)
+    const data = await P2PModal.findOne({
+      _id : p2pId,
+    });
+    if (data) {
+      res.status(201).json({
+        success: true,
+        data: data,
+      });
+    } else {
+      res.status(201).json({
+        success: true,
+        message: "No data",
+      });
+    }
+  } catch (err) {
+    res.status(400).json({ success: false});
   }
 });
 

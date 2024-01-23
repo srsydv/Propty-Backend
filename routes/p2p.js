@@ -63,5 +63,12 @@ router
       authorize("user"),
       p2pController.getUsersListedProperties
     );
-
+    
+router
+  .route("/getSaleDetailsById/:p2pId")
+  .get(
+      protect,
+      authorize("user"),
+      p2pController.getSaleDetailsById
+    );
 module.exports = router;
