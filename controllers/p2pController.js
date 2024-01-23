@@ -274,12 +274,22 @@ exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
       const { userId } = req.body;
       const data = await P2PModal.find({
        seller: userId,
-    });
-    if (user) {
+    }).populate([
+      {
+        path: "property",
+        select: "propertyName mediaLinks",
+      },
+    ]).populate([
+      {
+        path: "seller",
+        select: "username",
+      },
+    ]);;
+    if (data) {
       res.status(201).json({
         success: true,
-        message: "user data",
-        user: data,
+        message: "data",
+        data: data,
       });
     } else {
       res.status(201).json({
@@ -288,7 +298,7 @@ exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
       });
     }
   } catch (err) {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false+ err });
   }
 });
 
