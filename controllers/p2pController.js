@@ -234,7 +234,7 @@ exports.getAllListedProperties = asyncHandler(async (req, res, next) => {
     ]).populate([
       {
         path: "seller",
-        select: "username",
+        select: "name",
       },
     ]);
     res.status(201).json({
@@ -283,7 +283,7 @@ exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
     ]).populate([
       {
         path: "seller",
-        select: "username",
+        select: "name",
       },
     ]);
     if (data) {
@@ -317,9 +317,15 @@ exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
     ]).populate([
       {
         path: "seller",
-        select: "username",
+        select: "name",
       },
-    ]);;
+    ]).populate([
+      {
+        path: "buyers.user",
+        select: "name profileImage",
+      },
+    ]);
+    
     if (data) {
       res.status(201).json({
         success: true,
