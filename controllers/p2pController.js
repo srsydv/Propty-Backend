@@ -249,14 +249,25 @@ exports.getAllListedProperties = asyncHandler(async (req, res, next) => {
 exports.getAllOrders = asyncHandler(async (req, res, next) => {
 
   try {
-    const user = await UserModel.findOne({
+    const projection = { p2pHistory: 1 };
+    const data = await UserModel.findOne({
       wallet_address : req.user.wallet_address,
-    });
-    if (user) {
+    },projection).populate([
+      {
+        path: "p2pHistory.property",
+        select: "propertyName mediaLinks",
+      },
+    ]).populate([
+      {
+        path: "p2pHistory.buyerOrSeller",
+        select: "name",
+      },
+    ]);
+    if (data) {
       res.status(201).json({
         success: true,
         message: "user data",
-        user: user.p2pHistory,
+        data: data,
       });
     } else {
       res.status(201).json({
@@ -265,7 +276,7 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
       });
     }
   } catch (err) {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false+err });
   }
 });
 
