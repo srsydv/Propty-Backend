@@ -285,7 +285,7 @@ exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
         path: "seller",
         select: "username",
       },
-    ]);;
+    ]);
     if (data) {
       res.status(201).json({
         success: true,
@@ -307,10 +307,19 @@ exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
 
   try {
     const {p2pId} = req.params;
-    console.log(p2pId)
     const data = await P2PModal.findOne({
       _id : p2pId,
-    });
+    }).populate([
+      {
+        path: "property",
+        select: "propertyName mediaLinks",
+      },
+    ]).populate([
+      {
+        path: "seller",
+        select: "username",
+      },
+    ]);;
     if (data) {
       res.status(201).json({
         success: true,
