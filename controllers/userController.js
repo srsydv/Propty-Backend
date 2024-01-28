@@ -903,3 +903,36 @@ exports.whitelistUser = asyncHandler(async (req, res, next) => {
       .json({ success: false, message: "Profile failed to update" });
   }
 });
+
+exports.getAllPropertyUser = asyncHandler(async (req, res, next) => {
+    try{
+      const { userId } = req.params;
+      const projection = {"propertyToken.property":1, "propertyToken.TotalToken": 1};
+      const data = await UserModel.findOne({
+        _id: userId
+      },projection).populate([
+        {
+          path: "propertyToken.property",
+          select: "propertyName propertyContractAddress tokenPrice",
+        },
+      ]);
+      if(data){
+        res.status(201).json({
+          success: true,
+          message: "Data exists",
+          data: data,
+        })
+      }
+      else{
+        res
+          .status(400)
+          .json({ success: false, message: "Not found" });
+      }
+    }
+    catch(err){
+      res
+        .status(400)
+        .json({ success: false, message: "Error occured" + err});
+    }
+
+});

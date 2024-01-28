@@ -165,7 +165,13 @@ router
   .route("/updateProfile")
   .put(protect, authorize("user"), userController.updateUser);
 
- 
-
+   
+router
+  .route("/getAllPropertyUser/:userId")
+  .get(
+    protect,
+    authorize("user", "admin"),
+    userController.getAllPropertyUser
+  );
 
 module.exports = router;
