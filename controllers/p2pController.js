@@ -228,7 +228,7 @@ exports.getAllListedProperties = asyncHandler(async (req, res, next) => {
     const result = await P2PModal.find({}).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks",
+        select: "propertyName mediaLinks assetJurisdiction propertyContractAddress",
       },
     ]).populate([
       {
