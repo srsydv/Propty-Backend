@@ -93,6 +93,8 @@ exports.buy = asyncHandler(async (req, res, next) => {
                 amount: tokensBought
             },
             }, 
+            status: "inactive",
+            availableTokens: 0
         },
         { new: true },
         async (err, docs) => {
@@ -197,6 +199,7 @@ exports.buy = asyncHandler(async (req, res, next) => {
                                               .status(201)
                                               .json({
                                               success: true,
+                                              message: "Bought successfully"
                                               });
                                       }
                                       else{
