@@ -68,7 +68,7 @@ exports.cancelSale = asyncHandler(async (req, res, next) => {
             if (err) {
               res.status(400).json({ success: false });
             } else {
-              res.status(200).json({ success: true });
+              res.status(201).json({ success: true });
             }
           }
       );
