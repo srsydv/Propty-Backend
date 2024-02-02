@@ -472,7 +472,7 @@ exports.getAllBuyOrSellRequests = asyncHandler(async (req, res, next) => {
     query = RequestModel.find(queryStr).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice totalPrice rentPerToken expectedIncome rentStartDate propertyIssuer rentalType rented contract propertyContractAddress",
+        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract propertyContractAddress",
       },
     ]);
 
@@ -531,7 +531,7 @@ exports.getRequest = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice totalPrice rentPerToken expectedIncome rentStartDate propertyIssuer rentalType rented contract",
+        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract",
       },
     ]);
     if (request) {
@@ -565,21 +565,10 @@ exports.checkAdmin = asyncHandler(async (req, res, next) => {
         message: "Owner exists",
       });
     } else {
-      const newProperty = await PropertyModel.findOne({
-        propertyCreatorWalletAddress : walletAddress
-      });
-      if (newProperty) {
-        res.status(201).json({
-          success: true,
-          message: "creator exists",
-        });
-      }
-      else {
         res.status(201).json({
             success: true,
             message: "No Admin Found",
-          });
-      }
+        });
     }
   } catch (error) {
     res.status(400).json({
@@ -597,7 +586,7 @@ exports.allRequestsOfUser = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice totalPrice rentPerToken expectedIncome rentStartDate propertyIssuer rentalType rented contract",
+        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract",
       },
     ]);
     let data = request;
@@ -672,7 +661,7 @@ exports.getAllAssetProperties = asyncHandler(async (req, res, next) => {
     ).populate([
       {
         path: "propertyToken.property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice totalPrice rentPerToken expectedIncome rentStartDate propertyIssuer rentalType rented contract propertyContractAddress propertyOwnerWalletAddress",
+        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract propertyContractAddress propertyOwnerWalletAddress",
       },
     ]);
     
@@ -913,7 +902,7 @@ exports.getAllPropertyUser = asyncHandler(async (req, res, next) => {
       },projection).populate([
         {
           path: "propertyToken.property",
-          select: "propertyName propertyContractAddress tokenPrice",
+          select: "propertyName propertyContractAddress pricePerToken",
         },
       ]);
       if(data){

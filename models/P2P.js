@@ -39,7 +39,7 @@ const P2PSchema = new mongoose.Schema(
         required: true,
     },
 
-    tokenPrice: {
+    pricePerToken: {
         type: Number,
         required: true,
     },

@@ -93,8 +93,7 @@ exports.buy = asyncHandler(async (req, res, next) => {
                 amount: tokensBought
             },
             }, 
-            status: "inactive",
-            availableTokens: 0
+            $inc: { "availableTokens": -tokensBought},
         },
         { new: true },
         async (err, docs) => {
@@ -103,6 +102,9 @@ exports.buy = asyncHandler(async (req, res, next) => {
                 success: false ,
                 message: "Failed to buy"});
             } else {
+                if(docs.availableTokens==0)
+                  docs.status="inactive"
+                await docs.save();
                 const seller = docs.seller.toString();
                 const property = docs.property.toString();
                 UserModel.findOneAndUpdate(
@@ -285,7 +287,7 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
 exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
   try {
       const { userId } = req.params;
-      const projection = { property: 1, seller: 1, availableTokens: 1, tokenPrice: 1 ,totalTokens: 1, status: 1};
+      const projection = { property: 1, seller: 1, availableTokens: 1, pricePerToken: 1 ,totalTokens: 1, status: 1};
       const data = await P2PModal.find({
        seller: userId,
     }, projection).populate([
