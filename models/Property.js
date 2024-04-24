@@ -25,6 +25,9 @@ const PropertySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  chainId: {
+    type: Number,
+  },
   mediaLinks: {
     type: [
       {
