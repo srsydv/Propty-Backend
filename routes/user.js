@@ -79,7 +79,7 @@ router
 
 router
 .route("/acceptRequest/:requestId")
-.put(protect, authorize("admin"), userController.acceptRequest);
+.put(protect, authorize("user","admin"), userController.acceptRequest);
 
 router
 .route("/acceptSellRequest/:requestId")
