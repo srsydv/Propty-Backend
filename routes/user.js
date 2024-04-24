@@ -83,11 +83,11 @@ router
 
 router
 .route("/acceptSellRequest/:requestId")
-.put(protect, authorize("admin"), userController.acceptSellRequest);
+.put(protect, authorize("user", "admin"), userController.acceptSellRequest);
 
 router
 .route("/rejectRequest/:requestId")
-.put(protect, authorize("admin"), userController.rejectRequest);
+.put(protect, authorize("user", "admin"), userController.rejectRequest);
 
 
 router
