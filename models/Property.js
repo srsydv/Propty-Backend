@@ -32,24 +32,19 @@ const PropertySchema = new mongoose.Schema({
       mediaLink: String,
       }
     ],
-    required: true,
   },
   assetJurisdiction: {
     address: {
       type: String,
-      required: true,
     },
     postalCode: {
       type: Number,
-      required: true,
     },
     country: {
       type: String,
-      required: true,
     },
     city: {
       type: String,
-      required: true,
     },
   },
   propertyOwner: {
@@ -76,20 +71,19 @@ const PropertySchema = new mongoose.Schema({
       type: String,
     }
   },
-  supportingDocuments: {
-    propertyAssessmentDocument: String,
-    certificateOfFormation: String,
-    operatingAgreement: String,
-    purchaseContract: String,
-    rentAndLeaseTerms: String,
-    operatingExpensesTaxReceit: String,
-    pestReport: String,
-    jurisdictionPermission: String,
-    provincialIncorporation: String,
-  },
+  // supportingDocuments: {
+  //   propertyAssessmentDocument: String,
+  //   certificateOfFormation: String,
+  //   operatingAgreement: String,
+  //   purchaseContract: String,
+  //   rentAndLeaseTerms: String,
+  //   operatingExpensesTaxReceit: String,
+  //   pestReport: String,
+  //   jurisdictionPermission: String,
+  //   provincialIncorporation: String,
+  // },
   about: {
     type: String,
-    required: true,
   },
   attributes: [
     {
@@ -99,79 +93,60 @@ const PropertySchema = new mongoose.Schema({
   ],
   fairMarketValue: {
     type: Number,
-    required: true,
   },
   totalInvestment: {
     type: Number,
-    required: true,
   },
   underlyingAssetPrice: {
     type: Number,
-    required: true,
   },
   upfrontDaoLlcFees: {
     type: Number,
-    required: true,
   },
   operatingReserve: {
     type: Number,
-    required: true,
   },
   closingCost: {
     type: Number,
-    required: true,
   },
   tokenizationFees: {
     type: Number,
-    required: true,
   },
   pricePerToken: {
     type: Number,
-    required: true,
   },
   totalTokens: {
     type: Number,
-    required: true,
   },
   minInvestment: {
     type: Number,
-    required: true,
   },
   maxInvestment: {
     type: Number,
-    required: true,
   },
   amountRaised: {
     type: Number,
-    required: true,
   },
   grossRentPerMonth: {
     type: Number,
-    required: true,
   },
   grossRentPerYear: {
     type: Number,
-    required: true,
   },
   monthlyCosts: {
     type: Number,
-    required: true,
   },
   maintenanceExpenses: {
     type: Number,
-    required: true,
   },
   propertyTaxes: {
     type: Number,
-    required: true,
   },
   insurance: {
     type: Number,
-    required: true,
   },
   utilities: {
     type: Number,
-    required: true,
   },
   propertyManagement: {
     type: Number,
@@ -181,47 +156,36 @@ const PropertySchema = new mongoose.Schema({
   },
   rentalType: {
     type: String,
-    required: true,
   },
   rentStartDate: {
     type: Date,
-    required: true,
   },
   rentSubsidy: {
     type: String,
-    required: true,
   },
   rented: {
     type: String,
-    required: true,
   },
   rentpayingDuration: {
     type: String,
-    required: true,
   },
   tenure: {
     type: String,
-    required: true,
   },
   projectedAppreciation: {
     type: Number,
-    required: true,
   },
   netRentPerMonth: {
     type: Number,
-    required: true,
   },
   netRentPerYear: {
     type: Number,
-    required: true,
   },
   projectedRentalYield: {
     type: Number,
-    required: true,
   },
   projectedAnnualYield: {
     type: Number,
-    required: true,
   },
 
   propertyOwnerWalletAddress : String,
@@ -229,7 +193,6 @@ const PropertySchema = new mongoose.Schema({
 
   availableTokens: {
     type: Number,
-    required: true,
   },  
   propertyContractAddress: {
     type: String, 
