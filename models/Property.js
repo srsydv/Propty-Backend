@@ -205,8 +205,9 @@ const PropertySchema = new mongoose.Schema({
     type: Number, 
     unique: true,
   },
-
-  
+  totalPrice: {
+    type: Number,
+  },
   tokenPrice: {
     type: Number,
   },
