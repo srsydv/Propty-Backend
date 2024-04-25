@@ -115,9 +115,6 @@ const PropertySchema = new mongoose.Schema({
   tokenizationFees: {
     type: Number,
   },
-  pricePerToken: {
-    type: Number,
-  },
   totalTokens: {
     type: Number,
   },
@@ -210,20 +207,18 @@ const PropertySchema = new mongoose.Schema({
   },
 
   
-  // totalPrice: {
-  //   type: Number,
-  //   required: true,
-  // },
-  // rentPerToken: {
-  //   type: Number,
-  //   required: true,
-  // },
-  
-
-  // expectedIncome: {
-  //   type: Number,
-  //   required: true,
-  // },
+  tokenPrice: {
+    type: Number,
+  },
+  rentPerToken: {
+    type: Number,
+  },
+  expectedIncome: {
+    type: Number,
+  },
+  offeringPercent: {
+    type: Number,
+  },
 
   rentReceived: {
     type: Number,

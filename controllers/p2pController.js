@@ -287,7 +287,7 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
 exports.getUsersListedProperties = asyncHandler(async (req, res, next) => {
   try {
       const { userId } = req.params;
-      const projection = { property: 1, seller: 1, availableTokens: 1, pricePerToken: 1 ,totalTokens: 1, status: 1};
+      const projection = { property: 1, seller: 1, availableTokens: 1, tokenPrice: 1 ,totalTokens: 1, status: 1};
       const data = await P2PModal.find({
        seller: userId,
     }, projection).populate([

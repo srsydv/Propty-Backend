@@ -472,7 +472,7 @@ exports.getAllBuyOrSellRequests = asyncHandler(async (req, res, next) => {
     query = RequestModel.find(queryStr).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract propertyContractAddress",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract propertyContractAddress",
       },
     ]);
 
@@ -531,7 +531,7 @@ exports.getRequest = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract",
       },
     ]);
     if (request) {
@@ -586,7 +586,7 @@ exports.allRequestsOfUser = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract",
       },
     ]);
     let data = request;
@@ -661,7 +661,7 @@ exports.getAllAssetProperties = asyncHandler(async (req, res, next) => {
     ).populate([
       {
         path: "propertyToken.property",
-        select: "propertyName mediaLinks about assetJurisdiction pricePerToken rentStartDate propertyIssuer rentalType rented contract propertyContractAddress propertyOwnerWalletAddress",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract propertyContractAddress propertyOwnerWalletAddress",
       },
     ]);
     
@@ -902,7 +902,7 @@ exports.getAllPropertyUser = asyncHandler(async (req, res, next) => {
       },projection).populate([
         {
           path: "propertyToken.property",
-          select: "propertyName propertyContractAddress pricePerToken",
+          select: "propertyName propertyContractAddress tokenPrice",
         },
       ]);
       if(data){
