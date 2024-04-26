@@ -74,17 +74,14 @@ const PropertySchema = new mongoose.Schema({
       type: String,
     }
   },
-  // supportingDocuments: {
-  //   propertyAssessmentDocument: String,
-  //   certificateOfFormation: String,
-  //   operatingAgreement: String,
-  //   purchaseContract: String,
-  //   rentAndLeaseTerms: String,
-  //   operatingExpensesTaxReceit: String,
-  //   pestReport: String,
-  //   jurisdictionPermission: String,
-  //   provincialIncorporation: String,
-  // },
+  supportingDocuments:  {
+    type: [
+      {
+      name: { type: String },
+      link: { type: String },
+      }
+    ],
+  },
   about: {
     type: String,
   },
