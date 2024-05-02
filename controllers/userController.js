@@ -474,6 +474,11 @@ exports.getAllBuyOrSellRequests = asyncHandler(async (req, res, next) => {
         path: "property",
         select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract propertyContractAddress",
       },
+    ]).populate([
+      {
+        path: "user",
+        select: "username",
+      },
     ]);
 
     if (sortby) {
