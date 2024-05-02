@@ -60,6 +60,13 @@ router
     authorize("user", "admin"),
     userController.allRequestsOfUser
   );
+  router
+  .route("/allRequestsOfProperty/:propertyId")
+  .get(
+    protect,
+    authorize("user", "admin"),
+    userController.allRequestsOfProperty
+  );
 
 router
   .route("/getAllAssetProperties/:walletAddress")

@@ -230,6 +230,6 @@ const PropertySchema = new mongoose.Schema({
   rentHistory: [rentHistorySchema],
   withdrawHistory : [withdrawEarningSchema],
 
-});
+},  { timestamps: true });
 
 module.exports = mongoose.model("Property", PropertySchema);

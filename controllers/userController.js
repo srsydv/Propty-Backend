@@ -586,7 +586,7 @@ exports.allRequestsOfUser = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract chainId totalPrice rentPertoken expectedIncome",
       },
     ]);
     let data = request;
@@ -653,6 +653,41 @@ exports.allRequestsOfUser = asyncHandler(async (req, res, next) => {
     });
   }
 });
+
+exports.allRequestsOfProperty = asyncHandler(async (req, res, next) => {
+  try {
+    const { propertyId } = req.params;
+    const data = await RequestModel.find({
+      property : propertyId,
+    }).populate([
+      {
+        path: "property",
+        select: "propertyName mediaLinks tokenPrice chainId totalPrice rentPertoken expectedIncome",
+      },
+    ]).populate([
+      {
+        path: "user",
+        select: "username",
+      },
+    ]);
+    if (data) {
+        res.status(201).json({
+          success: true,
+          message: "Request exists",
+          request: data,
+        });
+    } else {
+      res.status(201).json({
+        success: true,
+        message: "No Request Found",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+    });
+  }
+});
 exports.getAllAssetProperties = asyncHandler(async (req, res, next) => {
   try {
     const { walletAddress } = req.params;
@@ -661,7 +696,7 @@ exports.getAllAssetProperties = asyncHandler(async (req, res, next) => {
     ).populate([
       {
         path: "propertyToken.property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract propertyContractAddress propertyOwnerWalletAddress",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract propertyContractAddress propertyOwnerWalletAddress chainId totalPrice rentPertoken expectedIncome",
       },
     ]);
     
