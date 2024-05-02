@@ -61,11 +61,11 @@ router
     userController.allRequestsOfUser
   );
   router
-  .route("/allRequestsOfProperty/:propertyId")
+  .route("/allRequestsOfBuyProperty/:propertyId")
   .get(
     protect,
     authorize("user", "admin"),
-    userController.allRequestsOfProperty
+    userController.allRequestsOfBuyProperty
   );
 
 router

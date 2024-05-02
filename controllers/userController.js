@@ -659,7 +659,7 @@ exports.allRequestsOfUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-exports.allRequestsOfProperty = asyncHandler(async (req, res, next) => {
+exports.allRequestsOfBuyProperty = asyncHandler(async (req, res, next) => {
   try {
     const { propertyId } = req.params;
     const data = await RequestModel.find({
