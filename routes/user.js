@@ -67,6 +67,13 @@ router
     authorize("user", "admin"),
     userController.allRequestsOfBuyProperty
   );
+  router
+  .route("/allRequestsOfSellProperty/:propertyId")
+  .get(
+    protect,
+    authorize("user", "admin"),
+    userController.allRequestsOfSellProperty
+  );
 
 router
   .route("/getAllAssetProperties/:walletAddress")

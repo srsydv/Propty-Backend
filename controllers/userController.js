@@ -591,7 +591,7 @@ exports.allRequestsOfUser = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract chainId totalPrice rentPertoken expectedIncome",
+        select: "propertyName mediaLinks about assetJurisdiction tokenPrice rentStartDate propertyIssuer rentalType rented contract chainId totalPrice rentPerToken expectedIncome",
       },
     ]);
     let data = request;
@@ -664,6 +664,43 @@ exports.allRequestsOfBuyProperty = asyncHandler(async (req, res, next) => {
     const { propertyId } = req.params;
     const data = await RequestModel.find({
       property : propertyId,
+      requestType: "buy"
+    }).populate([
+      {
+        path: "property",
+        select: "propertyName mediaLinks tokenPrice chainId totalPrice rentPerToken expectedIncome",
+      },
+    ]).populate([
+      {
+        path: "user",
+        select: "username",
+      },
+    ]);
+    if (data) {
+        res.status(201).json({
+          success: true,
+          message: "Request exists",
+          request: data,
+        });
+    } else {
+      res.status(201).json({
+        success: true,
+        message: "No Request Found",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+    });
+  }
+});
+
+exports.allRequestsOfSellProperty = asyncHandler(async (req, res, next) => {
+  try {
+    const { propertyId } = req.params;
+    const data = await RequestModel.find({
+      property : propertyId,
+      requestType: "sell"
     }).populate([
       {
         path: "property",
