@@ -38,6 +38,7 @@ router
   .get(
       protect, 
       authorize("user","admin"),
+      advancedResults(PropertyModel),
       propertyController.ownerProperties
     );
 
