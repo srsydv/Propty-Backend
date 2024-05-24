@@ -38,15 +38,16 @@ const P2PSchema = new mongoose.Schema(
         type: Number,
         required: true,
     },
-
-    pricePerToken: {
+    salePrice: {
         type: Number,
         required: true,
     },
-    tokenValue: {
-        type: Number,
-        required: true,
-    },
+    // pricePerToken: {
+    //     type: Number,
+    // },
+    // tokenValue: {
+    //     type: Number,
+    // },
     _saleId: {
         type: Number,
         required: true,

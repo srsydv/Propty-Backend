@@ -668,7 +668,7 @@ exports.allRequestsOfBuyProperty = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks tokenPrice chainId totalPrice rentPerToken expectedIncome",
+        select: "propertyName mediaLinks tokenPrice chainId totalPrice rentPerToken expectedIncome propertyContractAddress",
       },
     ]).populate([
       {
