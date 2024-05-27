@@ -361,20 +361,21 @@ exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
 exports.getOrderBookByPropertyId = asyncHandler(async (req, res, next) => {
 
   try {
-    const projection = { totalTokens: 1, salePrice:1 };
+    const projection1 = { _saleId: 1, totalTokens: 1, salePrice:1 };
+    const projection2 = { totalTokens: 1, salePrice:1 };
     const {propertyId} = req.params;
 
     const dataActive = await P2PModal.find({
       property : propertyId,
       status: "active"
-    },projection);
+    },projection1);
 
     dataActive.sort((a, b) => a.salePrice - b.salePrice);
 
     const dataSold = await P2PModal.find({
       property : propertyId,
       status: "inactive"
-    },projection);
+    },projection2);
 
     if (dataActive && dataSold) {
       res.status(201).json({
