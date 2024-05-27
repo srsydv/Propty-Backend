@@ -62,7 +62,7 @@ exports.cancelSale = asyncHandler(async (req, res, next) => {
       const { p2pId } = req.params;
       P2PModal.findOneAndUpdate(
         { _id: p2pId },
-        { status: "inactive" },
+        { status: "cancelled" },
         { new: true },
         async (err, docs) => {
             if (err) {
@@ -357,3 +357,66 @@ exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
   }
 });
 
+
+exports.getOrderBookByPropertyId = asyncHandler(async (req, res, next) => {
+
+  try {
+    const projection = { totalTokens: 1, salePrice:1 };
+    const {propertyId} = req.params;
+
+    const dataActive = await P2PModal.find({
+      property : propertyId,
+      status: "active"
+    },projection);
+
+    dataActive.sort((a, b) => a.salePrice - b.salePrice);
+
+    const dataSold = await P2PModal.find({
+      property : propertyId,
+      status: "inactive"
+    },projection);
+
+    if (dataActive && dataSold) {
+      res.status(201).json({
+        success: true,
+        data: {
+          dataActive: dataActive,
+          dataSold: dataSold
+        },
+      });
+    } else {
+      res.status(201).json({
+        success: true,
+        message: "No data",
+      });
+    }
+  } catch (err) {
+    res.status(400).json({ success: false});
+  }
+});
+
+exports.getp2pHistoryByPropertyId = asyncHandler(async (req, res, next) => {
+
+  try {
+    const projection = { totalTokens: 1, salePrice:1, updatedAt: 1 };
+    const {propertyId} = req.params;
+    const data = await P2PModal.find({
+      property : propertyId,
+      status: "inactive"
+    },projection)
+    
+    if (data) {
+      res.status(201).json({
+        success: true,
+        data: data,
+      });
+    } else {
+      res.status(201).json({
+        success: true,
+        message: "No data",
+      });
+    }
+  } catch (err) {
+    res.status(400).json({ success: false});
+  }
+});

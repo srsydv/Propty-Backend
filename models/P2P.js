@@ -27,7 +27,7 @@ const P2PSchema = new mongoose.Schema(
     },
     buyers: [Buyers],
     status: {
-        type: String, enum: ["active", "inactive"],
+        type: String, enum: ["active", "inactive", "cancelled"],
         default: "active" 
     },
     availableTokens: {

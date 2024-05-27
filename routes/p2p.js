@@ -71,4 +71,19 @@ router
       authorize("user"),
       p2pController.getSaleDetailsById
     );
+
+router
+  .route("/getOrderBookByPropertyId/:propertyId")
+  .get(
+      protect,
+      authorize("user","admin"),
+      p2pController.getOrderBookByPropertyId
+    );
+router
+  .route("/getp2pHistoryByPropertyId/:propertyId")
+  .get(
+      protect,
+      authorize("user","admin"),
+      p2pController.getp2pHistoryByPropertyId
+    );   
 module.exports = router;
