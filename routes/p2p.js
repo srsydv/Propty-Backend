@@ -32,6 +32,14 @@ router
   );
 
 router
+  .route("/editSale/:p2pId")
+  .put(
+    protect,
+    authorize("user"),
+    p2pController.editSale
+  );
+
+router
   .route("/buyFromMarketplace/:p2pId")
   .post(
     protect,
@@ -76,14 +84,12 @@ router
   .route("/getOrderBookByPropertyId/:propertyId")
   .get(
       protect,
-      authorize("user","admin"),
       p2pController.getOrderBookByPropertyId
     );
 router
   .route("/getp2pHistoryByPropertyId/:propertyId")
   .get(
       protect,
-      authorize("user","admin"),
       p2pController.getp2pHistoryByPropertyId
     );   
 module.exports = router;

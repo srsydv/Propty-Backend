@@ -79,6 +79,33 @@ exports.cancelSale = asyncHandler(async (req, res, next) => {
     }
 });
 
+exports.editSale = asyncHandler(async (req, res, next) => {
+  try {
+    const { p2pId } = req.params;
+    const { salePrice, totalTokens, _saleId } = req.body;
+    P2PModal.findOneAndUpdate(
+      { _id: p2pId },
+      { salePrice : salePrice,
+        totalTokens: totalTokens,
+        availableTokens : totalTokens,
+        _saleId: _saleId
+      },
+      { new: true },
+      async (err, docs) => {
+          if (err) {
+            res.status(400).json({ success: false });
+          } else {
+            res.status(201).json({ success: true });
+          }
+        }
+    );
+  } catch (err) {
+    res
+      .status(400)
+      .json({ success: false, message: "Profile failed to update" });
+  }
+});
+
 exports.buy = asyncHandler(async (req, res, next) => {
     try {
         const { p2pId } = req.params;
@@ -327,7 +354,7 @@ exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
     }).populate([
       {
         path: "property",
-        select: "propertyName mediaLinks",
+        select: "propertyName mediaLinks propertyContractAddress",
       },
     ]).populate([
       {
@@ -342,10 +369,26 @@ exports.getSaleDetailsById = asyncHandler(async (req, res, next) => {
     ]);
     
     if (data) {
-      res.status(201).json({
-        success: true,
-        data: data,
+      const propertyData = await UserModel.findOne({
+        _id: data.seller._id,
+        "propertyToken.property" : data.property._id
       });
+      if(propertyData){
+        let specificPropertyToken = propertyData.propertyToken.find(
+          x => x.property.toString() === data.property._id.toString()
+        )
+        res.status(201).json({
+          success: true,
+          data: data,
+          tokens: specificPropertyToken
+        });
+      }
+      else {
+        res.status(201).json({
+          success: true,
+          message: "No Tokens",
+        });
+      }
     } else {
       res.status(201).json({
         success: true,
@@ -421,3 +464,5 @@ exports.getp2pHistoryByPropertyId = asyncHandler(async (req, res, next) => {
     res.status(400).json({ success: false});
   }
 });
+
+//cancel sale is not written for multiple buyer. 

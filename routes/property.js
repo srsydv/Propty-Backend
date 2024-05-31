@@ -41,5 +41,13 @@ router
       advancedResults(PropertyModel),
       propertyController.ownerProperties
     );
+router
+  .route("/editProperty/:propertyId")
+  .put(
+      protect, 
+      authorize("user"),
+      propertyController.editProperty
+    );
+    
 
 module.exports = router;

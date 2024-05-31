@@ -33,6 +33,32 @@ exports.createProperty = asyncHandler(async (req, res, next) => {
   }
 });
 
+exports.editProperty = asyncHandler(async (req, res, next) => {
+  try {
+    const { propertyId } = req.params;
+//     const {mediaLinks, propertyOwner, propertyIssuer, propertyValidator, supportingDocuments, about, attributes, fairMarketValue, underlyingAssetPrice, grossRentPerMonth} = req.body;
+    
+    PropertyModel.findOneAndUpdate(
+      { _id: propertyId },
+      { ...req.body
+      },
+      { new: true },
+      async (err, docs) => {
+          if (err) {
+            res.status(400).json({ success: false });
+          } else {
+            res.status(201).json({ success: true });
+          }
+        }
+    );
+  } catch (err) {
+    res
+      .status(401)
+      .json({ success: false, message: "Failed to create property" });
+      
+  }
+});
+
 
 exports.getAllProperties = asyncHandler(async (req, res, next) => {
   try {
