@@ -45,7 +45,7 @@ router
   .route("/editProperty/:propertyId")
   .put(
       protect, 
-      authorize("user"),
+      authorize("admin"),
       propertyController.editProperty
     );
     
