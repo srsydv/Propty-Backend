@@ -98,6 +98,10 @@ exports.payRent = asyncHandler(async (req, res, next) => {
                   _id : user_arr[i],  
                   "propertyToken.property" : propertyId    
                 },{
+                  $inc: { 
+                    totalRentEarned: rentReceived * tokens / total_tokens,
+                    rentBalance: rentReceived * tokens / total_tokens
+                  },
                   $push: {
                     "propertyToken.$.rent": {
                       "amount": rentReceived * tokens / total_tokens,
@@ -247,6 +251,7 @@ exports.withdrawEarning = asyncHandler(async (req, res, next) => {
     let userData = await UserModel.findOneAndUpdate(
       { wallet_address },
       {
+        $inc: { rentBalance: -withdrawnAmount},
         $push: {
           withdrawnHistory: {
             property: propertyId,
@@ -1001,4 +1006,43 @@ exports.getAllPropertyUser = asyncHandler(async (req, res, next) => {
         .json({ success: false, message: "Error occured" + err});
     }
 
+});
+
+exports.getUserPropertyAndRentDetails = asyncHandler(async (req, res, next) => {
+  try{
+    const { userId } = req.params;
+    const data = await UserModel.findOne({
+      _id: userId
+    });
+    if(data){
+      var propertiesOwned = data.propertyToken.length;
+      var estimatedPropertyValue = 0;
+      for(var i=0;i<propertiesOwned;i++){
+        const propertyDetails = await PropertyModel.findOne({
+          _id: data.propertyToken[i].property
+        });
+        estimatedPropertyValue += (data.propertyToken[i].TotalToken * propertyDetails.tokenPrice);
+      }
+      res.status(201).json({
+        success: true,
+        message: "Data exists",
+        data: {
+          rentBalance: data.rentBalance,
+          totalRentEarned: data.totalRentEarned,
+          propertiesOwned: propertiesOwned,
+          estimatedPropertyValue: estimatedPropertyValue,
+        },
+      })
+    }
+    else{
+      res
+        .status(400)
+        .json({ success: false, message: "Not found" });
+    }
+  }
+  catch(err){
+    res
+      .status(400)
+      .json({ success: false, message: "Error occured" + err});
+  }
 });

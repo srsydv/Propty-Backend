@@ -104,8 +104,9 @@ const UserSchema = new mongoose.Schema(
     reviewStatus: String,
     withdrawnHistory: [withdrawEarningSchema],
     propertyToken : [propertyTokenSchema],
-    p2pHistory: [p2pHistorySchema]
-    
+    p2pHistory: [p2pHistorySchema],
+    totalRentEarned: Number,
+    rentBalance: Number,
   },
   { timestamps: true }
 );

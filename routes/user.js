@@ -188,4 +188,12 @@ router
     userController.getAllPropertyUser
   );
 
+router
+  .route("/getUserPropertyAndRentDetails/:userId")
+  .get(
+    protect,
+    authorize("user", "admin"),
+    userController.getUserPropertyAndRentDetails
+  );
+
 module.exports = router;
