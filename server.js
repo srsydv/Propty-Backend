@@ -7,7 +7,8 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 // const errorHandler = require("./middleware/error");
 
-dotenv.config({ path: "./.env" });
+// Load environment variables (only if .env file exists, otherwise use system env vars)
+dotenv.config();
 
 connectDB();
 
